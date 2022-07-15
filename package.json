@@ -10,7 +10,7 @@
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
-  "dependencies": {
+  "peerDependencies": {
     "@azure/monitor-opentelemetry-exporter": "^1.0.0-beta.8",
     "@opentelemetry/api": "^1.1.0",
     "@opentelemetry/core": "^1.4.0",
