@@ -1,5 +1,6 @@
 {
-  "name": "",
+  "type": "module",
+  "name": "telemetry-wrapper",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -23,5 +24,16 @@
   "devDependencies": {
     "@azure/functions": "^3.0.0",
     "typescript": "^4.0.0"
-  }
+  },
+  "main": "TelemetryProvider.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pranjalBhadu/opentelemetry-wrap.git"
+  },
+  "author": "pranjalbhadu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pranjalBhadu/opentelemetry-wrap/issues"
+  },
+  "homepage": "https://github.com/pranjalBhadu/opentelemetry-wrap#readme"
 }

@@ -9,10 +9,11 @@ const { W3CTraceContextPropagator} = require("@opentelemetry/core");
 export class TelemetryProvider{
     private static TelemetryResource: Resource;
     private static Provider: NodeTracerProvider;
-    // private static TelemetryExporter: AzureMonitorTraceExporter = new AzureMonitorTraceExporter({
-    //     connectionString: TelemetryConstants.ConnectionString
-    // });
-    private static TelemetryExporter = new ConsoleSpanExporter();
+    public static ConnectionString: string;
+    private static TelemetryExporter: AzureMonitorTraceExporter = new AzureMonitorTraceExporter({
+        connectionString: TelemetryProvider.ConnectionString
+    });
+    // private static TelemetryExporter = new ConsoleSpanExporter();
     private static TelemetryProcessor: BatchSpanProcessor = new BatchSpanProcessor(TelemetryProvider.TelemetryExporter);
     public static TelemetryTracer: Tracer;
     constructor(TracerName: string, TracerVersion: string){
@@ -33,20 +34,16 @@ export class TelemetryProvider{
         TelemetryProvider.TelemetryTracer = trace.getTracer(TracerName, TracerVersion)
     }
 
+    public static setConnectionString(connstr: string): void {
+        TelemetryProvider.ConnectionString = connstr;
+    }
+
     public static getTelemetryTracer(): Tracer {
         return TelemetryProvider.TelemetryTracer
     }
 
     public static startTracing(spanName: string, activeSpan: Span = undefined, kind: number = 0, attributes: Object = null): Span{
         const spanKind: SpanKind = TelemetryProvider.getSpanKind(kind)
-        // const currentSpan: Span = TelemetryProvider.getCurrentSpan()
-        // if(currentSpan!=undefined)
-        // {const id = currentSpan.spanContext().traceId
-        // console.log("id: ", id)}
-        // if(currentSpan == undefined){
-        //     console.log("undefined")
-        // }
-        // const ctx: Context = trace.setSpan(context.active(), currentSpan);
         const ctx = trace.setSpan(context.active(), activeSpan);
         const span: Span = TelemetryProvider.TelemetryTracer.startSpan(spanName, {kind: spanKind}, ctx)
         if(attributes != null){
